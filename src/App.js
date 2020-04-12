@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Home from "./components/Home";
+import NavigationBar from "./components/NavigationBar";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
+import Container from "react-bootstrap/Container";
 
 class App extends Component {
   constructor(props) {
@@ -16,6 +18,7 @@ class App extends Component {
 
   componentDidMount() {
     this.loginStatus();
+    console.log(this.state.user);
   }
 
   handleLogin = (data) => {
@@ -36,9 +39,8 @@ class App extends Component {
     axios
       .get("http://localhost:3001/api/v1/logged_in", { withCredentials: true })
       .then((response) => {
-        console.log(response);
         if (response.data.logged_in) {
-          this.handleLogin(response);
+          this.handleLogin(response.data);
         } else {
           this.handleLogout();
         }
@@ -48,15 +50,16 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <Container className="App">
         <Router>
           <Switch>
             <Route
               exact
               path="/"
               render={(props) => (
-                <Home
+                <NavigationBar
                   {...props}
+                  user={this.state.user}
                   handleLogout={this.handleLogout}
                   loggedInStatus={this.state.isLoggedIn}
                 />
@@ -66,27 +69,43 @@ class App extends Component {
               exact
               path="/login"
               render={(props) => (
-                <Login
-                  {...props}
-                  handleLogin={this.handleLogin}
-                  loggedInStatus={this.state.isLoggedIn}
-                />
+                <div>
+                  <NavigationBar
+                    {...props}
+                    user={this.state.user}
+                    handleLogout={this.handleLogout}
+                    loggedInStatus={this.state.isLoggedIn}
+                  />
+                  <Login
+                    {...props}
+                    handleLogin={this.handleLogin}
+                    loggedInStatus={this.state.isLoggedIn}
+                  />
+                </div>
               )}
             />
             <Route
               exact
               path="/signup"
               render={(props) => (
-                <Signup
-                  {...props}
-                  handleLogin={this.handleLogin}
-                  loggedInStatus={this.state.isLoggedIn}
-                />
+                <div>
+                  <NavigationBar
+                    {...props}
+                    user={this.state.user}
+                    handleLogout={this.handleLogout}
+                    loggedInStatus={this.state.isLoggedIn}
+                  />
+                  <Signup
+                    {...props}
+                    handleLogin={this.handleLogin}
+                    loggedInStatus={this.state.isLoggedIn}
+                  />
+                </div>
               )}
             />
           </Switch>
         </Router>
-      </div>
+      </Container>
     );
   }
 }

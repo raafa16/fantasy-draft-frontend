@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 // import { axiosInstance } from "../../utils/API";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 class Signup extends Component {
   constructor(props) {
@@ -114,6 +115,9 @@ class Signup extends Component {
 
           <button type="submit">Sign Up</button>
         </form>
+        <div>
+          or <Link to="/login">Log In</Link>
+        </div>
         <div>{this.state.errors ? this.handleErrors() : null}</div>
       </div>
     );

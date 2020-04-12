@@ -16,7 +16,7 @@ const NavigationBar = (props) => {
 
   return (
     <div>
-      <Navbar bg="light" expand="lg">
+      <Navbar bg="dark" variant="dark" expand="lg">
         <Navbar.Brand href="/">Fantasy Draft</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -35,7 +35,10 @@ const NavigationBar = (props) => {
                 <Nav.Link onClick={handleClick}>Log Out</Nav.Link>
               </>
             ) : (
-              <Nav.Link href="/login">Log In</Nav.Link>
+              <>
+                <Nav.Link href="/login">Log In</Nav.Link>
+                <Nav.Link href="/signup">Sign Up</Nav.Link>
+              </>
             )}
           </Nav>
         </Navbar.Collapse>

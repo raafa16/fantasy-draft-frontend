@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import NavigationBar from "./components/NavigationBar";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
-import Container from "react-bootstrap/Container";
 
 class App extends Component {
   constructor(props) {
@@ -18,7 +22,6 @@ class App extends Component {
 
   componentDidMount() {
     this.loginStatus();
-    console.log(this.state.user);
   }
 
   handleLogin = (data) => {
@@ -50,7 +53,7 @@ class App extends Component {
 
   render() {
     return (
-      <Container className="App">
+      <div className="App">
         <Router>
           <Switch>
             <Route
@@ -68,21 +71,25 @@ class App extends Component {
             <Route
               exact
               path="/login"
-              render={(props) => (
-                <div>
-                  <NavigationBar
-                    {...props}
-                    user={this.state.user}
-                    handleLogout={this.handleLogout}
-                    loggedInStatus={this.state.isLoggedIn}
-                  />
-                  <Login
-                    {...props}
-                    handleLogin={this.handleLogin}
-                    loggedInStatus={this.state.isLoggedIn}
-                  />
-                </div>
-              )}
+              render={(props) =>
+                this.state.isLoggedIn ? (
+                  <Redirect to="/" />
+                ) : (
+                  <div>
+                    <NavigationBar
+                      {...props}
+                      user={this.state.user}
+                      handleLogout={this.handleLogout}
+                      loggedInStatus={this.state.isLoggedIn}
+                    />
+                    <Login
+                      {...props}
+                      handleLogin={this.handleLogin}
+                      loggedInStatus={this.state.isLoggedIn}
+                    />
+                  </div>
+                )
+              }
             />
             <Route
               exact
@@ -105,7 +112,7 @@ class App extends Component {
             />
           </Switch>
         </Router>
-      </Container>
+      </div>
     );
   }
 }

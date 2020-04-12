@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -11,6 +14,7 @@ class Login extends Component {
       errors: "",
     };
   }
+
   handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({
@@ -44,9 +48,11 @@ class Login extends Component {
       })
       .catch((error) => console.log("api errors:", error));
   };
+
   redirect = () => {
     this.props.history.push("/");
   };
+
   handleErrors = () => {
     return (
       <div>
@@ -58,10 +64,11 @@ class Login extends Component {
       </div>
     );
   };
+
   render() {
     const { username, email, password } = this.state;
     return (
-      <div>
+      <Container>
         <h1>Log In</h1>
         <form onSubmit={this.handleSubmit}>
           <input
@@ -85,15 +92,15 @@ class Login extends Component {
             value={password}
             onChange={this.handleChange}
           />
-          <button placeholder="submit" type="submit">
+          <Button placeholder="submit" type="submit">
             Log In
-          </button>
+          </Button>
           <div>
             or <Link to="/signup">sign up</Link>
           </div>
         </form>
         <div>{this.state.errors ? this.handleErrors() : null}</div>
-      </div>
+      </Container>
     );
   }
 }

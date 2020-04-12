@@ -2,6 +2,8 @@ import React, { Component } from "react";
 // import { axiosInstance } from "../../utils/API";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
 
 class Signup extends Component {
   constructor(props) {
@@ -76,7 +78,7 @@ class Signup extends Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <h1>Sign Up</h1>
 
         <form onSubmit={this.handleSubmit}>
@@ -113,13 +115,13 @@ class Signup extends Component {
             required
           ></input>
 
-          <button type="submit">Sign Up</button>
+          <Button type="submit">Sign Up</Button>
         </form>
         <div>
           or <Link to="/login">Log In</Link>
         </div>
         <div>{this.state.errors ? this.handleErrors() : null}</div>
-      </div>
+      </Container>
     );
   }
 }
